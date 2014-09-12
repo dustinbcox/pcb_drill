@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <div style="border: 3px solid #e1e1e8; padding: 1em 1em;">
+        <h1>Library</h1>
+
+        <p>This is the read-only library of gcode files.</p>
+
+        {% if dir_list | length %}
+            <h2>Gcode files:</h2>
+            <div>
+            <ul>
+                {% for filepath in dir_list -%}
+                    <li><a href="{{ url_for('library', filename=filepath) }}">{{ filepath | e }}</a></li>
+                {%- endfor %}
+            </ul>
+            </div>
+        {% endif %}
+       
+        {% if filename != None and fullpath != None and gcode != None %} 
+        <h2>Library - View file</h2>
+
+        <p>Filename: <input type="textbox" readonly length="{{ filename | length }}" value="{{ filename }}"></p>
+
+        <textarea readonly rows="{{ max_rows }}" style="width: 100%;color: grey;" >{{ gcode }}</textarea>
+
+        <p>Full path: 
+        <input type="textbox" readonly value="{{ fullpath }}" style="width: 100%;"></p>
+        
+        </div>
+        {% else %}
+            <div>
+                <br><br>
+                <b>No file selected</b>
+            </div>
+        {% endif %}
+
+
+{% endblock %}

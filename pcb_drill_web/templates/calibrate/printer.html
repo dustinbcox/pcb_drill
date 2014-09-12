@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+        <div style="border: 3px solid #e1e1e8; padding: 1em 1em;">
+            <h1>Calibrate Printer</h1>
+            <p>This calibrates the printer with the camera and the bed.
+                You will need to do this each time you change the bed or camera.</p>
+            <p><strong>Required:</strong></p>
+            <ul>
+                <li>One sacrificial board in order to drill three holes for orientation and scale.</li>
+                <li>Two images of the bed: a before and after of the drilling</li>
+            </ul>
+
+            <p><strong>Calibrate</strong></p>
+            <ol>
+                <li>Capture a picture of the bed with the sacrificial board. (i.e. predrill image)</li>
+
+{% macro form_capture_image(upload_method, image_input_name) %}
+            <form role="form" enctype="multipart/form-data" action="{{ url_for('calibrate_printer')}}" method="post">
+            <div>
+                 <div class="radio">
+                    <label>
+                        <input name="{{ upload_method }}" type="radio" value="camera" checked>
+                        <span class="glyphicon glyphicon-camera"></span>Capture from RPi Camera
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="{{ upload_method }}" type="radio" value="upload" disabled>
+                        <span>Or upload a file</span>
+                    </label>
+                </div>
+            
+                <div id="{{ image_input_name }}_form_group" class="form-group">
+                    <label for="{{ image_input_name }}">Image Upload:</label>
+                    <input type="file" id="{{ image_input_name }}" disabled>
+                    <p class="help-block">Supported files: JPEG,PNG,TIFF,GIF</p>
+                </div>
+               <button type="submit" class="btn btn-default">Capture</button>
+            </div>
+            </form>
+{%- endmacro %}
+                {% if pre_image_filename  %}
+                <img src="{{pre_image_filename}}" alt="pre_image_file">
+                {% else %}
+                {{ form_capture_image("pre_image_method", "pre_image_file") }}
+                {% endif %}
+                <br>
+                <li>We will need one sacrificial board in order to drill three holes for orientation and scale.</li>
+                <a href="{{ url_for('library', filename='calibrate_printer.gcode') }}">calibrate_printer.gcode</a>
+                <br>
+                <li>Once we drill the holes, we will need a picture from the Pi Camera</li>
+                {% if post_image_filename %}
+                <img src="{{post_image_filename}}" alt="post_image_file">
+                {% else %}
+                {{ form_capture_image("post_image_method", "post_image_file") }}
+                {% endif %}
+            </ol>
+            {% if cv_image_filename %}
+            <div>
+                <img src="{{ cv_image_filename }}" alt="cv image">
+            </div>
+            {% endif %}
+       </div>
+{% endblock %}

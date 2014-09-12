@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <div style="border: 1px solid #e1e1e8; padding: 1px 14px;">
+            <h1>Calibrate PCB on the Bed</h1>
+            <h2>Capture live image (or upload) to find offset to PCB</h2>
+            {% if calibrate_pcb_fullpath %}
+            <img src="{{ calibrate_pcb_fullpath }}" alt="calibrate pcb on bed"> 
+           {% else %}
+            <form role="form" enctype="multipart/form-data"  method="post">
+                <div class="form-group">
+                    <label for="pcb_image">PCB Image Upload on Bed:</label>
+                    <input type="file" name="pcb_image">
+                    <p class="help-block">Supported files: JPEG,PNG,TIFF,GIF</p>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="capture" type="checkbox" checked="checked">
+<span class="glyphicon glyphicon-camera"></span>
+Or Capture live image from RPi Camera
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Capture</button>
+            </form>
+            {% endif %}
+            {% if cv_keypoint_fullpath %}
+                 <img src="{{cv_keypoint_fullpath  }}" alt="">
+            {% endif %}
+            {% if cv_image_fullpath %}
+                 <img src="{{ cv_image_fullpath }}" alt="">
+            {% endif %}
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <div style="border: 1px solid #e1e1e8; padding: 1px 14px;">
+            <h1>Calibrate Camera</h1>
+            <p>This will allow you to view the camera on the HDMI attached monitor on the RaspberryPi.</p>
+            <p>TIPS: Make sure that when a PCB board is on the bed that it is in focus and that the ambient light is sufficient.</p>
+            <p>Once you have the camera in the proper location just turn off the preview.</p>
+            <form name="camera" role="form" action="{{ url_for('calibrate_camera')}}" method="post">
+                <input type="hidden" name="preview_on" value="0">
+                <button name="on" type="submit" class="btn" onClick="document.camera.preview_on.value = '1';">Toggle on preview</button>
+                <button name="on" type="submit" class="btn" onClick="document.camera.preview_on.value = '0';">Toggle off preview</button>
+            </form>
+        </div>
+
+{% endblock %}

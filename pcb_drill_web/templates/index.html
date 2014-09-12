@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+        <h1>Welcome to pcb_drill_web interface on the Raspberry Pi</h1>
+        <p>This web application is designed to produce gcode to drill
+        a pcb based on a solder mask and a captured image of the
+        pcb drill bed.</p>
+        <p>The overall process is: one, two, three, easy-z:</p>
+        <ol>
+            <li>Upload and process solder mask to find the solder to drill</li>
+            <li>Adjust the drill matrix based on a live captured image</li>
+            <li>Produce gcode to drill the board</li>
+        </ol>
+        
+
+
+{% endblock %}

@@ -1,3 +1,15 @@
+
+# Python virtualenv stuff
+include/
+local/
+man/
+
+# Vim stuff
+.*.swo
+
+# unneeded Mac files
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

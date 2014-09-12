@@ -1,0 +1,7 @@
+Drop root permissions on Daemon
+Implement JPEG stream for calibrating camera (macro mode) - i.e. preview mode
+ERROR handling in web interface with deamon
+error 70 from daemon:
+
+{u'exception': u'Traceback (most recent call last):\n!! File "./pcb_drilld.py", line 213, in run\n response = self._execute(request)\n!! File "./pcb_drilld.py", line 187, in _execute\n response = self._methods[command](**kwargs)\n!! File "./pcb_drilld.py", line 99, in capture_image\n \'-w\', str(width), \'-o\', full_path, \'-t\', \'5\'])\n!! File "/usr/lib/python2.7/subprocess.py", line 511, in check_call\n raise CalledProcessError(retcode, cmd)\n!! CalledProcessError: Command \'[\'/usr/bin/raspistill\', \'-h\', \'768\', \'-w\', \'1024\', \'-o\', \'/home/pi/pcb_drill/pcb_drill_web/static/pcb_drill_image_library/2014_09_07_17_24_20.756843-printer_pre_image.png\', \'-t\', \'5\']\' returned non-zero exit status 70\n', u'success': False, u'error': u"Command '['/usr/bin/raspistill', '-h', '768', '-w', '1024', '-o', '/home/pi/pcb_drill/pcb_drill_web/static/pcb_drill_image_library/2014_09_07_17_24_20.756843-printer_pre_image.png', '-t', '5']' returned non-zero exit status 70"}
+

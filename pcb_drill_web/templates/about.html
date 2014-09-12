@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="border: 3px solid #e1e1e8; padding: 1em 1em;">
+<h1>About this project...</h1>
+
+<div>
+ <p>This project is the vision of Mike Smith.</p>
+ <p>Familab and stuff</p>
+ <p> Tell a little bit about the story here </p>
+</div>
+
+
+<div align="center">
+<br><br>
+<a href="http://familab.org/"><img src="{{ url_for('static', filename='images/poweredby/familab.gif') }}" alt="Familab" title="Familab Powered" border="0" width="50" height="50"></a>
+<a href="http://simplecv.org/"><img src="{{ url_for('static', filename='images/poweredby/SM_logo_color.png') }}" alt="SimpleCV powered" title="SimpleCV powered" border="0" width="77" height="50"></a>
+<a href="https://www.python.org/"><img src="{{ url_for('static', filename='images/poweredby/python-powered-w-100x40.png') }}" alt="Python powered" title="Powered by Python" border="0"></a>
+<a href="http://flask.pocoo.org/"><img src="{{ url_for('static', filename='images/poweredby/flask-powered.png') }}" alt="Flask powered" title="Flask powered" border="0"></a>
+<a href="http://www.raspberrypi.org"><img src="{{ url_for('static', filename='images/poweredby/Raspi_Colour_R.png') }}" alt="Compatible with and runs on a Raspberry Pi(R)" title="Compatible with and run on a Raspberry Pi(R)" border="0" width="41" height="50"></a>
+<a href="http://opensource.org/"><img src="{{ url_for('static', filename='images/poweredby/OSI-Approved-License-100x137.png') }}" width="36" height="50" alt="This software is licensed under an Open Source Initiative approved license."></a>
+
+</div>
+
+<div>
+    <br>
+    <p><strong>Legal:</strong></p>
+    <ul>
+        <li>SimpleCV is a trademark of Sight Machine, Inc.</li>
+        <li>Raspberry Pi is a trademark of the Raspberry Pi Foundation.</li>
+        <li>Python is a registered trademark of the PSF: Python Software Foundation.</li>
+        <li>This software is licensed under an Open Source Initiative approved license.</li>
+        <li>This site is not affiliated with or endorsed by the Open Source Initiative</li>
+        <li>All other trademarks are the property of their respective owners.</li>
+        <li>E&amp;OE: Errors and omissions excepted</li>
+    </ul>
+</div>
+
+<div>
+    <br><br>
+    <p>Source code available and is licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a>:
+        <a href="https://github.com/dustinbcox/pcb_drill">https://github.com/dustinbcox/pcb_drill</a>
+</div>
+</div><!-- box div-->
+{% endblock %}

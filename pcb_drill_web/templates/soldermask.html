@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <div style="border: 1px solid #e1e1e8; padding: 1px 14px;">
+        {% if cv_solder_mask_filename %}
+            <h2>Processed Solder Mask - Pure gcode</h2>
+            <img src="{{ cv_solder_mask_filename }}" >
+
+            <form role="form" method="post" action="{{ url_for('main', action='gcode') }}">
+                <div class="form-group">
+                    <label for="prefix">gcode Prefix:</label>
+                    <textarea name="prefix" rows="{{ prefix_rows }}" style="width: 100%;" >{{ prefix }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="body">gcode body:</label>
+                    <textarea name="body" rows="{{ body_rows }}"style="width: 100%;" >{{ body }}</textarea>
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="postfix">gcode Postfix:</label>
+                    <textarea name="postfix" rows="{{ postfix_rows }}" style="width: 100%;" >{{ postfix }}</textarea>
+                </div>
+
+
+            <button type="submit" class="btn btn-default">Save</button>
+            </form>
+            
+        {% else %}
+            <h2>Upload Solder mask image</h2>
+            <p>Make sure that the image you upload only had the solder mask areas that you want to drill holes in</p>
+            <form role="form" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label for="upload_file">Solder Mask Upload:</label>
+                    <input type="file" name="image" id="upload_file">
+                    <p class="help-block">Supported files: JPEG,PNG,TIFF,GIF</p>
+                </div>
+                <button type="submit" class="btn btn-default">Upload</button>
+            </form>
+        {% endif %}
+        </div>
+
+{% endblock %}

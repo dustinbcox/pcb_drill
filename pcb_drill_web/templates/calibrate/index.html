@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+    SO you can calibrate two things:
+
+        <div style="border: 1px solid #e1e1e8; padding: 1px 14px;">
+            <h1>Calibrate Camera with Bed</h1>
+            <p>We will need one sacrificial board in order to drill three holes for orientation and scale.</p>
+            <h2>Capture live image (or upload) to find scale</h2>
+            <form role="form" enctype="multipart/form-data" action="/soldermask" method="post">
+                <div class="form-group">
+                    <label for="upload_file">Solder Mask Upload:</label>
+                    <input type="file" name="image" id="upload_file">
+                    <p class="help-block">Supported files: JPEG,PNG,TIFF,GIF</p>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="capture" type="checkbox">
+<span class="glyphicon glyphicon-camera"></span>
+Or Capture from RPi Camera
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Upload</button>
+            </form>
+        </div>
+
+
+{% endblock %}

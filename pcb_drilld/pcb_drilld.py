@@ -18,6 +18,7 @@ import logging
 import zmq
 import json
 import sys
+import math
 import re
 import SimpleCV
 import ConfigParser
@@ -77,16 +78,11 @@ class PcbDrillRPC(object):
         image = self._load_image(filename)
 
         self._solder_mask[session] = self._build_filename(filename)
-        #logo = SimpleCV.Image('logo')
-        #logo.scale(
 
         image = image.binarize()
 
         blobs = image.findBlobs()
         self._blobs[filename] = blobs
-
-        #dllogo = image.dl()
-        #dllogo.blit(logo)
 
         # Load same image
         image = SimpleCV.Image(self._solder_mask[session])
@@ -101,7 +97,6 @@ class PcbDrillRPC(object):
             dl.circle(blob.coordinates(), 2, color=SimpleCV.Color.RED)
         image.addDrawingLayer(dl)
         image.applyLayers()
-        #image.drawText("pcb_drill found {0} hole(s)".format(count), (image.width - 50), 10)
         solder_mask_image = self._build_filename("solder_mask" + filename)
         image.save(solder_mask_image)
         set_file_permissions(solder_mask_image, 0644, self._user, self._group)
@@ -146,24 +141,33 @@ class PcbDrillRPC(object):
         if keypoint is None:
             raise ValueError("Unable to locate board based on solder mask")
 
-        #rpc_data['topleft'] = ",".join(keypoint.topLeftCorners())
-        #rpc_data['topright'] = ",".join(keypoint.topRightCorners())
-        #rpc_data['bottomleft'] = ",".join(keypoint.bottomLeftCorners())
-        #rpc_data['bottomright'] = ",".join(keypoint.bottomRightCorners())
+        pcb_only = keypoint[0].crop()
 
-        #pcb_only = pcb_image.crop(*keypoint.topLeftCorners(),
-        #                          w=keypoint.topRightCorners()[0][0] - keypoint.topLeftCorners()[0][0],
-        #                          h=keypoint.bottomRightCorners()[0][1] - keypoint.topRightCorners()[0][1])
-        #pcb_only_filename = "crop_pcb_" + pcb_filename
-        #pcb_only.save(self._build_filename(pcb_only_filename))
-        #set_file_permissions(self._build_filename(pcb_only_filename), 0644, self._user, self._group)
-        #rpc_data['pcb_cropped_filename'] = pcb_only_filename
+        pcb_only_filename = "crop_pcb_" + pcb_filename
+        pcb_only.save(self._build_filename(pcb_only_filename))
+        set_file_permissions(self._build_filename(pcb_only_filename), 0644, self._user, self._group)
+        rpc_data['pcb_cropped_filename'] = pcb_only_filename
 
-        rpc_data['angle'] = keypoint.angle().tolist()[0]
+        delta_x = keypoint[0].topRightCorner()[0] - keypoint[0].topLeftCorner()[0]
+        delta_y = keypoint[0].bottomRightCorner()[1] - keypoint[0].topRightCorner()[1]
+        angle = math.atan2(delta_y, delta_x)
+
+        solder_mask_bin = solder_mask.binarize()
+        solder_mask_bin_image_mask = solder_mask_bin.rotate(angle).scale(keypoint[0].width(), keypoint[0].height())
+        blobs = pcb_only.findBlobsFromMask(solder_mask_bin_image_mask)
+        rpc_data['count'] = blobs.count()
+
+        rpc_data['angle'] = angle
         log.info("keypoint x = {0}, y = {1}".format(keypoint.x(), keypoint.y()))
 
         cv_filename = "cv_" + pcb_filename
         pcb_image.draw(keypoint, SimpleCV.Color.FUCHSIA, width=2)
+
+        for blob in blobs:
+            point = keypoint[0].topLeftCorner() + blob.coordinates()
+            pcb_image.drawCircle(point, 4, color=SimpleCV.Color.RED)
+
+
         pcb_image.save(self._build_filename(cv_filename))
 
         cv_keypoint_image = pcb_image_bin.drawKeypointMatches(solder_mask)

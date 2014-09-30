@@ -48,6 +48,8 @@ def get_nav_menu_items():
     main_menu.add(NavigationMenuItem('Library', 'library', filename=''))
 
     nav_menu.add(main_menu)
+
+    nav_menu.add(NavigationMenuItem('Octoprint', 'octoprint'))
     
     nav_menu.add(NavigationMenuItem('About...', 'about'))
 
@@ -299,6 +301,9 @@ def library(filename=""):
 def about():
     return generate_response('about', 'about.html')
 
+@app.route('/octoprint')
+def octoprint():
+    abort(404) 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = "PCB Drill Web Interface")

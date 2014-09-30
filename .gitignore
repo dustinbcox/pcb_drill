@@ -6,6 +6,7 @@ man/
 
 # Vim stuff
 .*.swo
+.*.swp
 
 # unneeded Mac files
 .DS_Store

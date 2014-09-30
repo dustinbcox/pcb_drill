@@ -68,3 +68,6 @@ The web interface converts a solder mask and following a calibration sequence yo
     - cd pcb_drill
     - source bin/activate
     - pip install -r requirements.txt
+* Run nginx_config/setup.sh to configure nginx with SSL
+
+

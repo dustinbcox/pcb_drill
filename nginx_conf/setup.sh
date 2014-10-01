@@ -28,6 +28,8 @@ fi
 
 echo "Let's install things"
 
+sudo apt-get update
+
 # Nginx Install
 if ! dpkg-query -l nginx > /dev/null; then
     echo "Installing nginx"

@@ -14,22 +14,25 @@ The web interface converts a solder mask and following a calibration sequence yo
 
 *These are my notes*
 
-* Download and install Raspbian Wheezy (2014-01-07) onto an SD card
+* Download and install Raspbian Wheezy (2014-09-09) onto an SD card
   - OS X
     - Ensure that you locate the disk:
     - diskutil list
-    - sudo dd if=2014-01-07-wheezy-raspbian.img of=/dev/rdisk1 bs=4m
+    - sudo dd if=2014-09-09-wheezy-raspbian.img of=/dev/rdisk1 bs=4m
   - Linux
     - dmesg | grep sd
-    - sudo dd if=2014-01-07-wheezy-raspbian.img of=/dev/sdb bs=4M # provided sdb is the sd card
+    - sudo dd if=2014-09-09-wheezy-raspbian.img of=/dev/sdb bs=4M # provided sdb is the sd card
 * Upon first boot configure the following (raspi-config will autostart):
   - expand filesystem
-  - change your password
-  - consider overclocking to TURBO (however, if you experience any stability problems back down to medium)
   - Internationalisation Options
     - change timezone
     - change keyboard layout
+  - Enable Camera 
   - Reboot
+* Run sudo raspi-config again
+  - change your password (we do this now after changing the keyboard layout)
+  - consider overclocking to medium (however, if you experience any stability problems back down. I have observed keyboard issues (sticky keys repeating randomly), Kernel Panics, lockups, etc.)
+  - reboot again
 * Configure networking (use nano or vim or whatever)
   - sudo nano /etc/wpa\_suplicant/wpa_suplicant.conf
   - sudo service networking restart

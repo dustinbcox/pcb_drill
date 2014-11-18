@@ -1,0 +1,9 @@
+# SSL Cert Stuff
+CONFIG=dartfrog
+COUNTRY_CODE=US
+STATE=Florida
+CITY=Orlando
+COMPANY=DartFrog
+SECTION="3d printing"
+COMMON_NAME="www.dustinbcox.com"
+EMAIL=dustin@dustinbcox.com

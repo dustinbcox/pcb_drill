@@ -1,0 +1,16 @@
+#!/bin/bash -e
+# Purpose: Launch the daemon as root
+
+#Thanks to http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root user"
+    exit 1
+fi
+
+# Enable virtualenv
+source $DIR/../bin/activate
+cd $DIR && ./pcb_drilld.py
+deactivate
